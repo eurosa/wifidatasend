@@ -6,7 +6,8 @@
 #include <ArduinoJson.h>
 #include <Bridge.h>
 #include <HttpClient.h>
-#define pin 5
+
+#define lightPin 5 //gpio 5 d1
  
 //Variables
 int i = 0;
@@ -41,6 +42,7 @@ void setup()
   EEPROM.begin(512); //Initialasing EEPROM
   delay(10);
   pinMode(LED_BUILTIN, OUTPUT);
+  pinMode(lightPin, OUTPUT);
   Serial.println();
   Serial.println();
   Serial.println("Startup");
@@ -95,17 +97,17 @@ void loop() {
   if ((WiFi.status() == WL_CONNECTED))
   {
  
-    for (int i = 0; i < 2; i++)
-    {
-      digitalWrite(LED_BUILTIN, HIGH);
-      delay(1000);
+    //for (int i = 0; i < 2; i++)
+    //{
       digitalWrite(LED_BUILTIN, LOW);
-      delay(1000);
-    }
+      //delay(1000);
+      //digitalWrite(LED_BUILTIN, LOW);
+      //delay(1000);
+    //}
    
     
 //postData();
- delay(5000);
+ //delay(5000);
 
   Serial.print("connecting to ");
   Serial.println(host);
@@ -131,10 +133,10 @@ void loop() {
   Serial.println(url);
 
   // This will send the request to the server
-  client.print(String("GET ") + url + " HTTP/1.0\r\n" +
+ /* client.print(String("GET ") + url + " HTTP/1.0\r\n" +
                "Host: " + host + "\r\n" + 
                "User-Agent: BuildFailureDetectorESP8266\r\n" +
-               "Connection: close\r\n\r\n");
+               "Connection: close\r\n\r\n");*/
 
   /*client.print(String("GET ") + url + " HTTP/1.1\r\n" +
                  "Host: " + host + "\r\n" +
@@ -166,17 +168,26 @@ void loop() {
     return;
   }
 
-  const char* sensor = doc["name"];
+  String sensor = doc["name"];
+
+  if(sensor=="HIGH"){
+       digitalWrite(lightPin, LOW);
+        // Print values.
+  Serial.println(sensor);
+      }else if(sensor=="LOW"){
+         digitalWrite(lightPin, HIGH);
+         Serial.println(sensor);
+        }
  
 
-  // Print values.
-  Serial.println(sensor);
+ 
   Serial.println();
   Serial.println("closing connection");
     
   }
   else
   {
+    digitalWrite(LED_BUILTIN, HIGH);
   }
  
 }
