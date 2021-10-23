@@ -7,7 +7,7 @@
 #include <Bridge.h>
 #include <HttpClient.h>
 
-#define lightPin 5 //gpio 5 d1
+#define relay_1 5 //gpio 5 d1
  
 //Variables
 int i = 0;
@@ -42,7 +42,7 @@ void setup()
   EEPROM.begin(512); //Initialasing EEPROM
   delay(10);
   pinMode(LED_BUILTIN, OUTPUT);
-  pinMode(lightPin, OUTPUT);
+  pinMode(relay_1, OUTPUT);
   Serial.println();
   Serial.println();
   Serial.println("Startup");
@@ -130,7 +130,7 @@ void loop() {
 
 
   Serial.print("Requesting URL: ");
-  Serial.println(url);
+ // Serial.println(url);
 
   // This will send the request to the server
  /* client.print(String("GET ") + url + " HTTP/1.0\r\n" +
@@ -151,7 +151,7 @@ void loop() {
      HTTPClient http;
 
       // Send request
-      http.begin(client,"https://timxn.com/ecom/getiotdata.php");
+      http.begin(client,"https://timxn.com/ecom/emded_system/getiotdata.php");
       http.GET();
     // char* str = "{\"status\":\"true\",\"name\":\"HIGH\"}";
        // Print the response
@@ -168,15 +168,15 @@ void loop() {
     return;
   }
 
-  String sensor = doc["name"];
+  String switch_1 = doc["switch_1"];
 
-  if(sensor=="HIGH"){
-       digitalWrite(lightPin, LOW);
+  if(switch_1=="HIGH"){
+       digitalWrite(relay_1, HIGH);
         // Print values.
-  Serial.println(sensor);
-      }else if(sensor=="LOW"){
-         digitalWrite(lightPin, HIGH);
-         Serial.println(sensor);
+  Serial.println(switch_1);
+      }else if(switch_1=="LOW"){
+         digitalWrite(relay_1, LOW);
+         Serial.println(switch_1);
         }
  
 
