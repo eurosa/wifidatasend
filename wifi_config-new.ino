@@ -7,7 +7,8 @@
 #include <Bridge.h>
 #include <HttpClient.h>
 #include <Arduino_JSON.h>
-#define pin 5
+#define lightPin 5 //gpio 5 d1
+
  
 //Variables
 int i = 0;
@@ -44,6 +45,7 @@ void setup()
   EEPROM.begin(512); //Initialasing EEPROM
   delay(10);
   pinMode(LED_BUILTIN, OUTPUT);
+  pinMode(lightPin, OUTPUT);
   Serial.println();
   Serial.println();
   Serial.println("Startup");
@@ -176,6 +178,11 @@ void loop() {
     // Decode JSON/Extract values
     Serial.println(F("Response:"));
     Serial.println(root["name"].as<char*>());
+    if(root["name"]=="HIGH"){
+       digitalWrite(lightPin, HIGH);
+      }else if(root["name"]=="LOW"){
+         digitalWrite(lightPin, LOW);
+        }
     //Serial.println(root["time"].as<char*>());
     //Serial.println(root["data"][0].as<char*>());
    // Serial.println(root["data"][1].as<char*>());
