@@ -151,7 +151,7 @@ void loop() {
      HTTPClient http;
 
       // Send request
-      http.begin(client,"https://timxn.com/ecom/emded_system/getiotdata.php");
+      http.begin(client,"https://timxn.com/ecom/emded_system/getiotdata.php?device_id=ranwifi01");
       http.GET();
     // char* str = "{\"status\":\"true\",\"name\":\"HIGH\"}";
        // Print the response
