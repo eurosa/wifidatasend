@@ -106,8 +106,9 @@ void loop() {
     //}
    
     
-//postData();
+  //postData();
  //delay(5000);
+  //Serial.setDebugOutput(true);
 
   Serial.print("connecting to ");
   Serial.println(host);
