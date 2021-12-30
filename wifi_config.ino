@@ -7,7 +7,10 @@
 #include <Bridge.h>
 #include <HttpClient.h>
 
-#define relay_1 5 //gpio 5 d1
+#define relay_4 5 //gpio 5 d1
+#define relay_3 4 //gpio 4 d2
+#define relay_2 0 //gpio 0 d3
+#define relay_1 16 //gpio 16 d0
  
 //Variables
 int i = 0;
@@ -43,6 +46,9 @@ void setup()
   delay(10);
   pinMode(LED_BUILTIN, OUTPUT);
   pinMode(relay_1, OUTPUT);
+  pinMode(relay_2, OUTPUT);
+  pinMode(relay_3, OUTPUT);
+  pinMode(relay_4, OUTPUT);
   Serial.println();
   Serial.println();
   Serial.println("Startup");
@@ -98,17 +104,16 @@ void loop() {
   {
  
     //for (int i = 0; i < 2; i++)
-    //{
-      digitalWrite(LED_BUILTIN, LOW);
-      //delay(1000);
-      //digitalWrite(LED_BUILTIN, LOW);
-      //delay(1000);
+   // {
+     digitalWrite(LED_BUILTIN, HIGH);
+    // delay(1000);
+     //digitalWrite(LED_BUILTIN, LOW);
+    // delay(1000);
     //}
    
     
-  //postData();
+//postData();
  //delay(5000);
-  //Serial.setDebugOutput(true);
 
   Serial.print("connecting to ");
   Serial.println(host);
@@ -152,6 +157,7 @@ void loop() {
      HTTPClient http;
 
       // Send request
+      //http.begin(client,"https://timxn.com/ecom/emded_system/getiotdata.php");
       http.begin(client,"https://timxn.com/ecom/emded_system/getiotdata.php?device_id=ranwifi01");
       http.GET();
     // char* str = "{\"status\":\"true\",\"name\":\"HIGH\"}";
@@ -170,14 +176,43 @@ void loop() {
   }
 
   String switch_1 = doc["switch_1"];
+  String switch_2 = doc["switch_2"];
+  String switch_3 = doc["switch_3"];
+  String switch_4 = doc["switch_4"];
 
   if(switch_1=="HIGH"){
        digitalWrite(relay_1, HIGH);
         // Print values.
-  Serial.println(switch_1);
+       Serial.println(switch_1);
       }else if(switch_1=="LOW"){
          digitalWrite(relay_1, LOW);
          Serial.println(switch_1);
+        }
+
+    if(switch_2=="HIGH"){
+       digitalWrite(relay_2, HIGH);
+        // Print values.
+       Serial.println(switch_2);
+      }else if(switch_2=="LOW"){
+         digitalWrite(relay_2, LOW);
+         Serial.println(switch_2);
+        }
+ if(switch_3=="HIGH"){
+       digitalWrite(relay_3, HIGH);
+        // Print values.
+       Serial.println(switch_3);
+      }else if(switch_3=="LOW"){
+         digitalWrite(relay_3, LOW);
+         Serial.println(switch_3);
+        }
+
+  if(switch_4=="HIGH"){
+       digitalWrite(relay_4, HIGH);
+        // Print values.
+       Serial.println(switch_4);
+      }else if(switch_4=="LOW"){
+         digitalWrite(relay_4, LOW);
+         Serial.println(switch_4);
         }
  
 
